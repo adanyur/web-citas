@@ -1,0 +1,21 @@
+option {
+  font-size: 15px;
+  text-align: center;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #1e7e34;
+  background-color: #28a745;
+}
+
+.custom-select:disabled {
+  color: #6c757d;
+  background-color: #1e7e341a;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #1e7e341a;
+  opacity: 1;
+}

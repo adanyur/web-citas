@@ -1,0 +1,18 @@
+import { Component, OnInit } from "@angular/core";
+import { HttpDataService } from "src/app/core/service/http-data.service";
+
+@Component({
+  selector: "app-layaout",
+  templateUrl: "./layaout.component.html",
+  styleUrls: ["./layaout.component.css"],
+})
+export class LayaoutComponent implements OnInit {
+  constructor(private _data: HttpDataService) {}
+  loading: boolean;
+  ngOnInit(): void {
+    // this.loading = this._data.cargando;
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 2000);
+  }
+}

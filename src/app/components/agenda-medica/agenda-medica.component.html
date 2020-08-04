@@ -1,0 +1,162 @@
+<form [formGroup]="formularioAgendaMedica" (ngSubmit)="postEnviarDatos()">
+  <div class="row">
+    <div class="col-md-4">
+      <!--FECHA--->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Fecha</label>
+        <input
+          type="date"
+          class="form-control rounded-pill border border-success"
+          placeholder="Fecha"
+          formControlName="fecha"
+          (ngModelChange)="getSelectFecha($event)"
+        />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <!--ESPECIALIDADES--->
+        <label for="exampleInputEmail1">Especialidad</label>
+        <select
+          class="form-control rounded-pill border border-success custom-select"
+          formControlName="especialidad"
+          (ngModelChange)="getSelectEspecialidad()"
+        >
+          >
+          <option [ngValue]="null">seleccionar especialidad</option>
+          <option
+            *ngFor="let especialidad of especialidades"
+            [ngValue]="especialidad.codigo"
+          >
+            {{ especialidad.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <!-- MEDICOS -->
+        <label for="exampleInputEmail1">Medico</label>
+        <select
+          class="form-control rounded-pill border border-success custom-select"
+          formControlName="medico"
+          (ngModelChange)="getSelectMedico()"
+        >
+          <option [ngValue]="null" disabled>seleccionar Medico</option>
+          <option
+            *ngFor="let medico of medicos$ | async"
+            [ngValue]="medico.id"
+            >{{ medico.medico }}</option
+          >
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- TURNO -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Turno</label>
+        <select
+          class="form-control rounded-pill border border-success custom-select"
+          formControlName="turno"
+          (ngModelChange)="getSelectTurno()"
+        >
+          <option [ngValue]="null" disabled>seleccionar Turno</option>
+          <option
+            *ngFor="let turno of turnos$ | async"
+            [ngValue]="turno.idprogramacion"
+          >
+            {{ turno.hora_inicio }} -
+            {{ turno.hora_fin }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <!-- HORA -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Hora</label>
+        <select
+          class="form-control rounded-pill border border-success custom-select"
+          formControlName="hora"
+        >
+          <option [ngValue]="null">seleccionar Hora</option>
+          <option *ngFor="let time of horas" [ngValue]="time">{{
+            time.hora
+          }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <!-- CORREO -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Correo</label>
+        <input
+          type="email"
+          class="form-control rounded-pill border border-success"
+          placeholder="Correo"
+          formControlName="correo"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- CEL -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Telefono/Celular</label>
+        <input
+          type="text"
+          class="form-control rounded-pill border border-success"
+          placeholder="Telefono o Celular"
+          formControlName="telcel"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="check">
+    <div class="col-md-4">
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="customCheck1"
+            formControlName="cns"
+            (ngModelChange)="disabledIafas($event)"
+          />
+          <label class="custom-control-label" for="customCheck1"
+            >Control niño sano</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <select
+          class="form-control rounded-pill border border-success custom-select"
+          formControlName="iafas"
+        >
+          <option [ngValue]="null" disabled>seleccionar seguro</option>
+          <option *ngFor="let iafa of iafas$ | async" [ngValue]="iafa.id">
+            {{ iafa.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <button
+        type="submit"
+        class="btn btn-success btn-lg btn-block rounded-pill"
+        [disabled]="formularioAgendaMedica.invalid"
+      >
+        ENVIAR
+      </button>
+    </div>
+  </div>
+</form>

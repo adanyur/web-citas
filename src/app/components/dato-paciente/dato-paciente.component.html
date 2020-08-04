@@ -1,0 +1,8 @@
+<ul
+  class="list-group list-group-flush animated fadeIn"
+  *ngFor="let paciente of paciente$ | async"
+>
+  <li class="list-group-item">DNI: {{ paciente.documento }}</li>
+  <li class="list-group-item">HISTORIA: {{ paciente.historia }}</li>
+  <li class="list-group-item">PACIENTE: {{ paciente.paciente }}</li>
+</ul>
