@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 //
 import { HttpDataService } from "src/app/core/service/http-data.service";
@@ -13,7 +12,7 @@ import { Turnos } from "src/app/core/models/turnos.models";
 import { Horas } from "src/app/core/models/horas.models";
 import { Iafas } from "src/app/core/models/iafas.model";
 import { DataSend } from "../../core/models/data-send.models";
-import { User } from "../../core/models/users.models";
+
 @Component({
   selector: "app-agenda-medica",
   templateUrl: "./agenda-medica.component.html",
@@ -27,15 +26,13 @@ export class AgendaMedicaComponent implements OnInit {
 
   horas: Horas;
   especialidades: Especialidades;
-  h: string;
   check: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private _data: HttpDataService,
     private storage: StorageService,
-    private message: MessageService,
-    private router: Router
+    private message: MessageService
   ) {}
 
   ngOnInit(): void {
