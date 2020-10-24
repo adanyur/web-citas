@@ -2,16 +2,20 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 //
-import { HttpDataService } from "src/app/core/service/http-data.service";
-import { StorageService } from "src/app/core/service/storage.service";
-import { MessageService } from "src/app/core/service/message.service";
+import {
+  HttpDataService,
+  StorageService,
+  MessageService,
+} from "../../core/service";
 ///
-import { Especialidades } from "../../core/models/especialidades.models";
-import { Medicos } from "../../core/models/medicos.models";
-import { Turnos } from "src/app/core/models/turnos.models";
-import { Horas } from "src/app/core/models/horas.models";
-import { Iafas } from "src/app/core/models/iafas.model";
-import { DataSend } from "../../core/models/data-send.models";
+import {
+  Especialidades,
+  Medicos,
+  Turnos,
+  Horas,
+  Iafas,
+  DataSend,
+} from "../../core/models";
 
 @Component({
   selector: "app-agenda-medica",
@@ -20,12 +24,12 @@ import { DataSend } from "../../core/models/data-send.models";
 })
 export class AgendaMedicaComponent implements OnInit {
   formularioAgendaMedica: FormGroup;
-  medicos$: Observable<Medicos>;
-  turnos$: Observable<Turnos>;
-  iafas$: Observable<Iafas>;
-
-  horas: Horas;
-  especialidades: Especialidades;
+  turnos$: Observable<Turnos[]>;
+  iafas$: Observable<Iafas[]>;
+  
+  medicos: Medicos[];
+  horas: Horas[];
+  especialidades: Especialidades[];
   check: boolean = false;
 
   constructor(
@@ -49,12 +53,10 @@ export class AgendaMedicaComponent implements OnInit {
     });
   }
 
-  Validacionfecha(data: Date) {
+  fecha(data: Date) {
     return new Date(data).getDate() + 1 < new Date().getDate() &&
       new Date(data).getMonth() < new Date().getMonth()
-      ? this.message.MessageError(
-          "La fecha seleccionada es menor a la fecha actual!"
-        )
+      ? this.message.MessageInfo("La fecha seleccionada es menor a la actual!")
       : this.getSelectFecha(data);
   }
 
@@ -65,7 +67,7 @@ export class AgendaMedicaComponent implements OnInit {
   getSelectFecha(fecha: Date) {
     this._data.Especialidades(fecha).subscribe((data) => {
       data["status"] === false
-        ? this.message.MessageError(data["message"])
+        ? this.message.MessageInfo(data["message"])
         : ((this.especialidades = data),
           this.formAgendaMedica.especialidad.enable());
     });
@@ -77,9 +79,15 @@ export class AgendaMedicaComponent implements OnInit {
     } else {
       this.check = false;
     }
-
-    this.medicos$ = this._data.Medicos(this.formularioAgendaMedica.value);
-    this.formAgendaMedica.medico.enable();
+    this._data.Medicos(this.formularioAgendaMedica.value).subscribe(data=>{
+        if (data['status']===false){
+          this.message.MessageInfo(data['message'])
+          return;
+        }
+          this.medicos=data;
+          this.formAgendaMedica.medico.enable();
+      }
+    )
   }
 
   getSelectMedico() {
@@ -90,7 +98,7 @@ export class AgendaMedicaComponent implements OnInit {
   getSelectTurno() {
     this._data.Horas(this.formularioAgendaMedica.value).subscribe((data) => {
       if (data["status"] === false) {
-        this.message.MessageError(data["message"]);
+        this.message.MessageInfo(data["message"]);
         return;
       }
       this.horas = data;
@@ -114,16 +122,11 @@ export class AgendaMedicaComponent implements OnInit {
       .postGenerarCitas(
         new DataSend(this.formularioAgendaMedica.value, this._data.historia)
       )
-      .subscribe(
-        (data) => {
-          this.message.MessageEnvio(data);
-          this.storage.removeSession();
-          this.Correo(data);
-        },
-        (error) => {
-          this.message.MessageError(error.name);
-        }
-      );
+      .subscribe((data) => {
+        this.message.MessageEnvio(data);
+        this.storage.removeSession();
+        this.Correo(data);
+      });
   }
 
   Correo(data: any) {

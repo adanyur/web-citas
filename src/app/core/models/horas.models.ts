@@ -1,4 +1,4 @@
 export interface Horas {
-  order: number;
+  id: number;
   hora: string;
 }

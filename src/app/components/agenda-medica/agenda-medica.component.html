@@ -9,13 +9,12 @@
           class="form-control rounded-pill border border-success"
           placeholder="Fecha"
           formControlName="fecha"
-          (ngModelChange)="getSelectFecha($event)"
-        />
+          (ngModelChange)="fecha($event)"
+          />
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <!--ESPECIALIDADES--->
         <label for="exampleInputEmail1">Especialidad</label>
         <select
           class="form-control rounded-pill border border-success custom-select"
@@ -35,7 +34,6 @@
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <!-- MEDICOS -->
         <label for="exampleInputEmail1">Medico</label>
         <select
           class="form-control rounded-pill border border-success custom-select"
@@ -44,7 +42,7 @@
         >
           <option [ngValue]="null" disabled>seleccionar Medico</option>
           <option
-            *ngFor="let medico of medicos$ | async"
+            *ngFor="let medico of medicos"
             [ngValue]="medico.id"
             >{{ medico.medico }}</option
           >
@@ -54,7 +52,6 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <!-- TURNO -->
       <div class="form-group">
         <label for="exampleInputEmail1">Turno</label>
         <select
@@ -74,7 +71,6 @@
       </div>
     </div>
     <div class="col-md-4">
-      <!-- HORA -->
       <div class="form-group">
         <label for="exampleInputEmail1">Hora</label>
         <select
@@ -89,7 +85,6 @@
       </div>
     </div>
     <div class="col-md-4">
-      <!-- CORREO -->
       <div class="form-group">
         <label for="exampleInputEmail1">Correo</label>
         <input
@@ -103,7 +98,6 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <!-- CEL -->
       <div class="form-group">
         <label for="exampleInputEmail1">Telefono/Celular</label>
         <input

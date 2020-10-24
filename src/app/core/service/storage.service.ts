@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 //INTERFACE
-import { Session } from "../models/session.models";
+import { Session } from "../models";
 
 @Injectable({
   providedIn: "root",

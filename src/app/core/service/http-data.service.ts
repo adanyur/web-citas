@@ -1,22 +1,24 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, from, of } from "rxjs";
+import { Observable, of } from "rxjs";
 //
 import { environment } from "../../../environments/environment";
 //
 import { StorageService } from "./storage.service";
 //
-import { Session } from "../models/session.models";
-import { Paciente } from "../models/paciente.models";
-import { Especialidades } from "../models/especialidades.models";
-import { Medicos } from "../models/medicos.models";
-import { Turnos } from "../models/turnos.models";
-import { Horas } from "../models/horas.models";
-import { Iafas } from "../models/iafas.model";
-import { DataSend } from "../models/data-send.models";
-import { Message } from "../models/message.models";
-import { Email } from "../models/email.models";
-import { User } from "../models/users.models";
+import {
+  Session,
+  Paciente,
+  Especialidades,
+  Medicos,
+  Turnos,
+  Horas,
+  Iafas,
+  DataSend,
+  Message,
+  Email,
+  User,
+} from "../models";
 
 @Injectable({
   providedIn: "root",
@@ -47,7 +49,7 @@ export class HttpDataService {
   }
 
   get historia() {
-    return this.storageService.getUsers().map((x: User) => x.historia);
+    return this.storageService.getUsers().map((historia: User) => historia.historia);
   }
 
   Paciente(): Observable<User> {
@@ -58,33 +60,27 @@ export class HttpDataService {
     const url = `${environment.apiURL}/especialidades?fecha=${this.fecha(
       fecha
     )}&historia=${this.historia}`;
-    return this.http.get<Especialidades>(url, { headers: this.headers });
+    return this.http.get<Especialidades[]>(url, { headers: this.headers });
   }
 
-  Medicos(data: any): Observable<Medicos> {
-    const url = `${environment.apiURL}/medicos?especialidad=${
-      data.especialidad
-    }&fecha=${this.fecha(data.fecha)}`;
-
-    return this.http.get<Medicos>(url, { headers: this.headers });
+  Medicos(data: any): Observable<Medicos[]> {
+    const url = `${environment.apiURL}/medicos?especialidad=${data.especialidad}&fecha=${this.fecha(data.fecha)}&historia=${this.historia}`;
+    return this.http.get<Medicos[]>(url, { headers: this.headers });
   }
 
-  Tunos(data: any): Observable<Turnos> {
-    const url = `${environment.apiURL}/turnos?especialidad=${
-      data.especialidad
-    }&fecha=${this.fecha(data.fecha)}&medico=${data.medico}`;
-
-    return this.http.get<Turnos>(url, { headers: this.headers });
+  Tunos(data: any): Observable<Turnos[]> {
+    const url = `${environment.apiURL}/turnos?especialidad=${data.especialidad}&fecha=${this.fecha(data.fecha)}&medico=${data.medico}`;
+    return this.http.get<Turnos[]>(url, { headers: this.headers });
   }
 
-  Horas(data: any): Observable<Horas> {
+  Horas(data: any): Observable<Horas[]> {
     const url = `${environment.apiURL}/horas?programacion=${data.turno}`;
-    return this.http.get<Horas>(url, { headers: this.headers });
+    return this.http.get<Horas[]>(url, { headers: this.headers });
   }
 
-  Iafas(): Observable<Iafas> {
+  Iafas(): Observable<Iafas[]> {
     const url = `${environment.apiURL}/iafas`;
-    return this.http.get<Iafas>(url, { headers: this.headers });
+    return this.http.get<Iafas[]>(url, { headers: this.headers });
   }
 
   postGenerarCitas(data: DataSend): Observable<Message> {

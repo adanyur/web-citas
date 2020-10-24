@@ -1,5 +1,6 @@
 export interface Turnos {
-  pr_numero: string;
-  pr_turno: string;
-  turnos_programados: [];
+  codigo: string;
+  hora_fin: string;
+  hora_inicio: string;
+  idprogramacion: string;
 }

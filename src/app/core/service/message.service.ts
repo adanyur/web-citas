@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import Swal from "sweetalert2";
 import { StorageService } from "./storage.service";
+import Swal from "sweetalert2";
 
 @Injectable({
   providedIn: "root",
@@ -10,12 +10,19 @@ export class MessageService {
   constructor(private router: Router, private storageService: StorageService) {}
 
   MessageError(error: string) {
-    Swal.fire({ icon: "error", title: error });
+    const message = `<h4>${error}</h4>`;
+    Swal.fire({ icon: "error", title: message });
   }
 
-  MessageEnvio(data: any) {
+  MessageInfo(info: string) {
+    const message = `<h4>${info}</h4>`;
+    Swal.fire({ icon: "info", title: message });
+  }
+
+  MessageEnvio(mensaje: any) {
+    const message = `<h4>${mensaje}</h4>`;
     Swal.fire({
-      title: "Enviando los datos",
+      title: "<h4>¡¡Generando citas!!</h4>",
       timer: 2000,
       onBeforeOpen: () => {
         Swal.showLoading();
@@ -27,7 +34,7 @@ export class MessageService {
           customClass: { confirmButton: "btn btn-success" },
           buttonsStyling: false,
         });
-        swalWithBootstrapButtons.fire(data[0].msj_status, "", "success");
+        swalWithBootstrapButtons.fire({ icon: "success", title: message });
       }
       this.router.navigate([""]);
     });

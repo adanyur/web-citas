@@ -1,4 +1,12 @@
+
+import {MessageInfo} from './index'
+
 export interface Medicos {
-  pr_servicio: string;
-  especialidadesprogramados: [];
+  id: string;
+  medico: string;
+  message:MessageInfo;
 }
+
+
+
+

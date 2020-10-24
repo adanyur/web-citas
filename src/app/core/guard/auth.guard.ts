@@ -15,10 +15,7 @@ import { StorageService } from "../service/storage.service";
 export class AuthGuard implements CanActivate {
   constructor(private storeService: StorageService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean

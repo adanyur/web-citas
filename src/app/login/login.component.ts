@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 //
 import { AuthService } from "./services/auth.service";
-import { StorageService } from "../core/service/storage.service";
-import { MessageService } from "../core/service/message.service";
+import { StorageService, MessageService } from "../core/service";
 //
-import { Session } from "../core/models/session.models";
-import { Auth } from "./models/auth.models";
+import { Session } from "../core/models";
+import { Auth } from "./models";
 
 @Component({
   selector: "app-login",
@@ -16,7 +15,7 @@ import { Auth } from "./models/auth.models";
 })
 export class LoginComponent implements OnInit {
   FormLogin: FormGroup;
-
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private authServicio: AuthService,
@@ -30,24 +29,32 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.storageService.getUsers();
-  }
+  ngOnInit(): void {}
 
   get formLogin() {
     return this.FormLogin.controls;
   }
 
   SubmitLogin() {
+    this.loading = true;
     this.authServicio.Login(new Auth(this.FormLogin.value)).subscribe(
-      (data: Session) => this.correctLogin(data),
-      (error) => this.message.MessageError(error.name)
+      (data: Session) => {
+        if (!data.status) {
+          this.message.MessageInfo(data.messages);
+          this.loading = false;
+          return;
+        }
+        this.correctLogin(data);
+      },
+      (error) => {
+        this.loading = false;
+        this.message.MessageError(error.name);
+      }
     );
   }
 
   private correctLogin(Session: Session) {
     if (!Session.status) {
-      //this.message.MessageError(Session.users);
       this.FormLogin.reset();
       return;
     }

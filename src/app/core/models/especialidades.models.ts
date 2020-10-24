@@ -1,4 +1,4 @@
 export interface Especialidades {
-  pr_servicio: string;
-  especialidadesprogramados: [];
+  codigo: string;
+  descripcion: string;
 }

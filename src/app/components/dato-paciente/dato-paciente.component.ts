@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 //
-import { HttpDataService } from "src/app/core/service/http-data.service";
+import { HttpDataService } from "../../core/service";
 //
-import { User } from "../../core/models/users.models";
-import { StorageService } from "../../core/service/storage.service";
+import { User } from "../../core/models";
 
 @Component({
   selector: "app-dato-paciente",
@@ -13,10 +12,7 @@ import { StorageService } from "../../core/service/storage.service";
 })
 export class DatoPacienteComponent implements OnInit {
   paciente$: Observable<User>;
-  constructor(
-    private _data: HttpDataService,
-    private storageService: StorageService
-  ) {}
+  constructor(private _data: HttpDataService) {}
 
   ngOnInit(): void {
     this.paciente$ = this._data.Paciente();

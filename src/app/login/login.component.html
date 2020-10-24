@@ -58,7 +58,8 @@
               class="btn btn-success rounded-pill btn-lg btn-block"
               [disabled]="FormLogin.invalid"
             >
-              Siguiente
+              <span *ngIf="!loading">Siguiente</span>
+              <div *ngIf="loading" class="spinner-border" role="status"></div>
             </button>
           </div>
         </form>

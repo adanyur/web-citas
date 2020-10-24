@@ -12,14 +12,13 @@ import { Session } from "../../core/models/session.models";
 })
 export class AuthService {
   headers: HttpHeaders;
-  auth: Auth;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({ Accept: "application/json" });
   }
 
   Login(login: Auth): Observable<Session> {
-    const URL = `${environment.apiURL}/ingreso`;
+    const URL = `${environment.apiURL}/login`;
     return this.http.post<Session>(URL, login);
   }
 }
