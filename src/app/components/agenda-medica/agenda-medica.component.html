@@ -3,44 +3,44 @@
     <div class="col-md-4">
       <!--FECHA--->
       <div class="form-group">
-        <label for="exampleInputEmail1">Fecha</label>
+        <!-- <label for="exampleInputEmail1">Fecha</label> -->
         <input
           type="date"
           class="form-control rounded-pill border border-success"
           placeholder="Fecha"
           formControlName="fecha"
-          (ngModelChange)="fecha($event)"
+          (change)="fecha($event.target.value)"
           />
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Especialidad</label>
+        <!-- <label for="exampleInputEmail1">Especialidad</label> -->
         <select
           class="form-control rounded-pill border border-success custom-select"
           formControlName="especialidad"
-          (ngModelChange)="getSelectEspecialidad()"
+          (change)="getSelectEspecialidad()"
         >
           >
-          <option [ngValue]="null">seleccionar especialidad</option>
+          <option value="">SELECCIONAR ESPECIALIDAD</option>
           <option
             *ngFor="let especialidad of especialidades"
             [ngValue]="especialidad.codigo"
           >
-            {{ especialidad.descripcion }}
+            {{ especialidad.descripcion }} 
           </option>
         </select>
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Medico</label>
+        <!-- <label for="exampleInputEmail1">Medico</label> -->
         <select
           class="form-control rounded-pill border border-success custom-select"
           formControlName="medico"
-          (ngModelChange)="getSelectMedico()"
+          (change)="getSelectMedico()"
         >
-          <option [ngValue]="null" disabled>seleccionar Medico</option>
+          <option value="">SELECCIONAR MEDICO</option>
           <option
             *ngFor="let medico of medicos"
             [ngValue]="medico.id"
@@ -53,13 +53,13 @@
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Turno</label>
+        <!-- <label for="exampleInputEmail1">Turno</label> -->
         <select
           class="form-control rounded-pill border border-success custom-select"
           formControlName="turno"
-          (ngModelChange)="getSelectTurno()"
+          (change)="getSelectTurno()"
         >
-          <option [ngValue]="null" disabled>seleccionar Turno</option>
+          <option value="">SELECCIONAR TURNOS</option>
           <option
             *ngFor="let turno of turnos$ | async"
             [ngValue]="turno.idprogramacion"
@@ -72,12 +72,12 @@
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Hora</label>
+        <!-- <label for="exampleInputEmail1">Hora</label> -->
         <select
           class="form-control rounded-pill border border-success custom-select"
           formControlName="hora"
         >
-          <option [ngValue]="null">seleccionar Hora</option>
+          <option value="">SELECCIONAR HORA</option>
           <option *ngFor="let time of horas" [ngValue]="time">{{
             time.hora
           }}</option>
@@ -86,7 +86,7 @@
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Correo</label>
+        <!-- <label for="exampleInputEmail1">Correo</label> -->
         <input
           type="email"
           class="form-control rounded-pill border border-success"
@@ -99,7 +99,7 @@
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
-        <label for="exampleInputEmail1">Telefono/Celular</label>
+        <!-- <label for="exampleInputEmail1">Telefono/Celular</label> -->
         <input
           type="text"
           class="form-control rounded-pill border border-success"
@@ -119,10 +119,9 @@
             class="custom-control-input"
             id="customCheck1"
             formControlName="cns"
-            (ngModelChange)="disabledIafas($event)"
+            (change)="disabledIafas($event.target.value)"
           />
-          <label class="custom-control-label" for="customCheck1"
-            >Control niño sano</label
+          <label class="custom-control-label" for="customCheck1">Control niño sano</label
           >
         </div>
       </div>
@@ -130,10 +129,10 @@
     <div class="col-md-4">
       <div class="form-group">
         <select
-          class="form-control rounded-pill border border-success custom-select"
+          class="form-control rounded-pill border border-success custom-select" 
           formControlName="iafas"
         >
-          <option [ngValue]="null" disabled>seleccionar seguro</option>
+          <option value="" disabled>SELECCIONAR IAFAS</option>
           <option *ngFor="let iafa of iafas$ | async" [ngValue]="iafa.id">
             {{ iafa.descripcion }}
           </option>

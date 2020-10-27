@@ -2,20 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 //
-import {
-  HttpDataService,
-  StorageService,
-  MessageService,
-} from "../../core/service";
+import { HttpDataService,StorageService,MessageService,} from "../../core/service";
 ///
-import {
-  Especialidades,
-  Medicos,
-  Turnos,
-  Horas,
-  Iafas,
-  DataSend,
-} from "../../core/models";
+import {Especialidades,Medicos,Turnos,Horas,Iafas,DataSend,} from "../../core/models";
 
 @Component({
   selector: "app-agenda-medica",
@@ -23,13 +12,12 @@ import {
   styleUrls: ["./agenda-medica.component.css"],
 })
 export class AgendaMedicaComponent implements OnInit {
-  formularioAgendaMedica: FormGroup;
   turnos$: Observable<Turnos[]>;
   iafas$: Observable<Iafas[]>;
-  
   medicos: Medicos[];
   horas: Horas[];
   especialidades: Especialidades[];
+  formularioAgendaMedica: FormGroup;
   check: boolean = false;
 
   constructor(
@@ -42,22 +30,20 @@ export class AgendaMedicaComponent implements OnInit {
   ngOnInit(): void {
     this.formularioAgendaMedica = this.fb.group({
       fecha: [null, Validators.required],
-      especialidad: [{ value: null, disabled: true }, Validators.required],
-      medico: [{ value: null, disabled: true }, Validators.required],
-      turno: [{ value: null, disabled: true }, Validators.required],
-      hora: [{ value: null, disabled: true }, Validators.required],
+      especialidad: [{ value: '', disabled: true }, Validators.required],
+      medico: [{ value: '', disabled: true }, Validators.required],
+      turno: [{ value: '', disabled: true }, Validators.required],
+      hora: [{ value: '', disabled: true }, Validators.required],
       cns: [false],
-      correo: [{ value: null, disabled: true }, Validators.required],
-      telcel: [{ value: null, disabled: true }, Validators.required],
-      iafas: [{ value: null, disabled: true }],
+      correo: [{ value: '', disabled: true }, Validators.required],
+      telcel: [{ value: '', disabled: true }, Validators.required],
+      iafas: [{ value: '', disabled: true }],
     });
   }
 
   fecha(data: Date) {
-    return new Date(data).getDate() + 1 < new Date().getDate() &&
-      new Date(data).getMonth() < new Date().getMonth()
-      ? this.message.MessageInfo("La fecha seleccionada es menor a la actual!")
-      : this.getSelectFecha(data);
+    return new Date(data).getDate() + 1 < new Date().getDate() && new Date(data).getMonth() < new Date().getMonth()
+      ? this.message.MessageInfo("La fecha seleccionada es menor a la actual!"): this.getSelectFecha(data);
   }
 
   get formAgendaMedica() {
@@ -66,22 +52,18 @@ export class AgendaMedicaComponent implements OnInit {
 
   getSelectFecha(fecha: Date) {
     this._data.Especialidades(fecha).subscribe((data) => {
-      data["status"] === false
-        ? this.message.MessageInfo(data["message"])
-        : ((this.especialidades = data),
-          this.formAgendaMedica.especialidad.enable());
+      data['status'] === false ? this.message.MessageInfo(data['message']) : ((this.especialidades = data), this.formAgendaMedica.especialidad.enable());
     });
   }
 
   getSelectEspecialidad() {
-    if (this.formularioAgendaMedica.value.especialidad == "001") {
-      this.check = true;
-    } else {
-      this.check = false;
-    }
+    this.check = this.formularioAgendaMedica.value.especialidad === "001" ? true:false;
+
     this._data.Medicos(this.formularioAgendaMedica.value).subscribe(data=>{
         if (data['status']===false){
           this.message.MessageInfo(data['message'])
+          this.formAgendaMedica.medico.setValue('');
+          this.formAgendaMedica.medico.disable();
           return;
         }
           this.medicos=data;
@@ -103,8 +85,8 @@ export class AgendaMedicaComponent implements OnInit {
       }
       this.horas = data;
       this.formAgendaMedica.hora.enable(),
-        this.formAgendaMedica.correo.enable(),
-        this.formAgendaMedica.telcel.enable();
+      this.formAgendaMedica.correo.enable(),
+      this.formAgendaMedica.telcel.enable();
     });
   }
 
@@ -119,9 +101,7 @@ export class AgendaMedicaComponent implements OnInit {
 
   postEnviarDatos() {
     this._data
-      .postGenerarCitas(
-        new DataSend(this.formularioAgendaMedica.value, this._data.historia)
-      )
+      .postGenerarCitas(new DataSend(this.formularioAgendaMedica.value, this._data.historia))
       .subscribe((data) => {
         this.message.MessageEnvio(data);
         this.storage.removeSession();
