@@ -7,8 +7,6 @@ import { environment } from '../../../environments/environment';
 import { StorageService } from './storage.service';
 //
 import {
-  Session,
-  Paciente,
   Especialidades,
   Medicos,
   Turnos,
@@ -29,13 +27,7 @@ export class HttpDataService {
   constructor(
     private http: HttpClient,
     private storageService: StorageService
-  ) {
-    const token = this.storageService.getToken();
-    this.headers = new HttpHeaders({
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-  }
+  ) {}
 
   fecha(fecha: Date) {
     const date = new Date(fecha);
@@ -60,32 +52,32 @@ export class HttpDataService {
     const url = `${environment.apiURL}/especialidades?fecha=${this.fecha(
       fecha
     )}&historia=${this.historia}`;
-    return this.http.get<Especialidades[]>(url, { headers: this.headers });
+    return this.http.get<Especialidades[]>(url);
   }
 
   Medicos(data: any): Observable<Medicos[]> {
     const url = `${environment.apiURL}/medicos?especialidad=${data.especialidad}&fecha=${this.fecha(data.fecha)}&historia=${this.historia}`;
-    return this.http.get<Medicos[]>(url, { headers: this.headers });
+    return this.http.get<Medicos[]>(url);
   }
 
   Tunos(data: any): Observable<Turnos[]> {
     const url = `${environment.apiURL}/turnos?especialidad=${data.especialidad}&fecha=${this.fecha(data.fecha)}&medico=${data.medico}`;
-    return this.http.get<Turnos[]>(url, { headers: this.headers });
+    return this.http.get<Turnos[]>(url);
   }
 
   Horas(data: any): Observable<Horas[]> {
     const url = `${environment.apiURL}/horas?programacion=${data.turno}`;
-    return this.http.get<Horas[]>(url, { headers: this.headers });
+    return this.http.get<Horas[]>(url);
   }
 
   Iafas(): Observable<Iafas[]> {
     const url = `${environment.apiURL}/iafas`;
-    return this.http.get<Iafas[]>(url, { headers: this.headers });
+    return this.http.get<Iafas[]>(url);
   }
 
   postGenerarCitas(data: DataSend): Observable<Message> {
     const url = `${environment.apiURL}/citas`;
-    return this.http.post<Message>(url, data, { headers: this.headers });
+    return this.http.post<Message>(url, data);
   }
 
   getCorreo(correo: any) {
@@ -95,6 +87,6 @@ export class HttpDataService {
     };
 
     const url = `${environment.apiURL}/email`;
-    return this.http.post(url, this.email, { headers: this.headers });
+    return this.http.post(url, this.email);
   }
 }
