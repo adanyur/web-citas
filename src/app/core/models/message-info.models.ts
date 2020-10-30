@@ -1,4 +1,4 @@
 export interface MessageInfo{
-    status:string,
-    message:string,
+    status: string;
+    message: string;
 }

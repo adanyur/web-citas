@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-//
-import { AuthService } from "./services/auth.service";
-import { StorageService, MessageService } from "../core/service";
-//
-import { Session } from "../core/models";
-import { Auth } from "./models";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthService } from './services/auth.service';
+import { StorageService , MessageService } from '../core/service';
+
+import { Session } from '../core/models';
+import { Auth } from './models';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   FormLogin: FormGroup;
@@ -25,15 +25,14 @@ export class LoginComponent implements OnInit {
   ) {
     this.FormLogin = this.fb.group({
       tipoDocumento: [null, Validators.required],
-      dni: [null, Validators.required],
+      documento: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {}
 
-  get formLogin() {
-    return this.FormLogin.controls;
-  }
+  get TipoDocumento() { return this.FormLogin.get('tipoDocumento'); }
+  get Documento() { return this.FormLogin.get('documento'); }
 
   SubmitLogin() {
     this.loading = true;
@@ -53,12 +52,12 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private correctLogin(Session: Session) {
-    if (!Session.status) {
+  private correctLogin(session: Session) {
+    if (!session.status) {
       this.FormLogin.reset();
       return;
     }
-    this.storageService.setSession(Session);
-    this.router.navigate(["/citas"]);
+    this.storageService.setSession(session);
+    this.router.navigate(['/citas']);
   }
 }

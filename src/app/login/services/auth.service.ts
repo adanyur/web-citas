@@ -1,20 +1,20 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
-//ENVIROMENT
-import { environment } from "../../../environments/environment";
-//MODELS
-import { Auth } from "../models/auth.models";
-import { Session } from "../../core/models/session.models";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
+
+import { Auth } from '../models/auth.models';
+import { Session } from '../../core/models/session.models';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
   headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
-    this.headers = new HttpHeaders({ Accept: "application/json" });
+    this.headers = new HttpHeaders({ Accept: 'application/json' });
   }
 
   Login(login: Auth): Observable<Session> {

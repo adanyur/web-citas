@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, of } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 //
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 //
-import { StorageService } from "./storage.service";
+import { StorageService } from './storage.service';
 //
 import {
   Session,
@@ -18,10 +18,10 @@ import {
   Message,
   Email,
   User,
-} from "../models";
+} from '../models';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class HttpDataService {
   headers: HttpHeaders;
@@ -30,21 +30,21 @@ export class HttpDataService {
     private http: HttpClient,
     private storageService: StorageService
   ) {
-    let token = this.storageService.getToken();
+    const token = this.storageService.getToken();
     this.headers = new HttpHeaders({
-      Accept: "application/json",
+      Accept: 'application/json',
       Authorization: `Bearer ${token}`,
     });
   }
 
   fecha(fecha: Date) {
-    let date = new Date(fecha);
+    const date = new Date(fecha);
     date.setDate(date.getDate() + 1);
     date.setMonth(date.getMonth());
-    return date.toLocaleDateString("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
+    return date.toLocaleDateString('default', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     });
   }
 

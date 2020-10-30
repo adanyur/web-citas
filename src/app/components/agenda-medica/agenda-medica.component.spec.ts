@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { AgendaMedicaComponent } from "./agenda-medica.component";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AgendaMedicaComponent } from './agenda-medica.component';
 
-describe("AgendaMedicaComponent", () => {
+describe('AgendaMedicaComponent', () => {
   let component: AgendaMedicaComponent;
   let fixture: ComponentFixture<AgendaMedicaComponent>;
 
@@ -17,7 +17,7 @@ describe("AgendaMedicaComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

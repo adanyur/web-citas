@@ -15,8 +15,8 @@
               <option value="2">CE</option>
               <option value="3">PAS</option>
             </select>
-            <div *ngIf="formLogin.tipoDocumento.invalid && (formLogin.tipoDocumento.dirty ||formLogin.tipoDocumento.touched)">
-              <div *ngIf="formLogin.tipoDocumento.errors?.required">
+            <div *ngIf="TipoDocumento.invalid && (TipoDocumento.dirty ||TipoDocumento.touched)">
+              <div *ngIf="TipoDocumento.errors?.required">
                 <small class="text-muted ml-3">
                   <em class="text-danger">Ingresar Tipo de documento</em>
                 </small>
@@ -28,10 +28,10 @@
               type="text"
               class="form-control rounded-pill border border-success"
               placeholder="Ingresar N° de documento"
-              formControlName="dni"
+              formControlName="documento"
             />
-            <div *ngIf="formLogin.dni.invalid &&(formLogin.dni.dirty || formLogin.dni.touched)">
-              <div *ngIf="formLogin.dni.errors?.required">
+            <div *ngIf="Documento.invalid &&(Documento.dirty || Documento.touched)">
+              <div *ngIf="Documento.errors.required">
                 <small class="text-muted ml-3">
                   <em class="text-danger">Ingresar N° de documento</em>
                   </small>

@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-//INTERFACE
-import { Session } from "../models";
+import { Injectable } from '@angular/core';
+
+import { Session } from '../models';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class StorageService {
   private localStorageService: any;
@@ -13,20 +13,20 @@ export class StorageService {
   }
 
   setSession(data: Session): void {
-    this.localStorageService.setItem("TOKEN", data.token);
-    this.localStorageService.setItem("USERS", JSON.stringify(data.users));
+    this.localStorageService.setItem('TOKEN', data.token);
+    this.localStorageService.setItem('USERS', JSON.stringify(data.users));
   }
 
   getToken() {
-    return this.localStorageService.getItem("TOKEN");
+    return this.localStorageService.getItem('TOKEN');
   }
 
   getUsers() {
-    return JSON.parse(this.localStorageService.getItem("USERS"));
+    return JSON.parse(this.localStorageService.getItem('USERS'));
   }
 
   removeSession() {
-    this.localStorageService.removeItem("TOKEN");
-    this.localStorageService.removeItem("USERS");
+    this.localStorageService.removeItem('TOKEN');
+    this.localStorageService.removeItem('USERS');
   }
 }

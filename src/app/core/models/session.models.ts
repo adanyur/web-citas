@@ -1,4 +1,4 @@
-import { User } from "./users.models";
+import { User } from './users.models';
 
 export interface Session {
   token: string;

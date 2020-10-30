@@ -1,21 +1,20 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   Router,
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
-} from "@angular/router";
-import { Observable } from "rxjs";
+} from '@angular/router';
+import { Observable } from 'rxjs';
 //
-import { StorageService } from "../service/storage.service";
+import { StorageService } from '../service/storage.service';
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   constructor(private storeService: StorageService, private router: Router) {}
-
-  canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot):
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -23,7 +22,7 @@ export class AuthGuard implements CanActivate {
     const session = this.storeService.getToken();
 
     if (!session) {
-      this.router.navigate([""]);
+      this.router.navigate(['']);
       return false;
     }
 

@@ -15,7 +15,7 @@ export class DataSend {
     this.hora = object.hora.hora;
     this.email = object.correo;
     this.movil = object.telcel;
-    this.cns = object.cns === false ? "false" : "true";
+    this.cns = object.cns === false ? 'false' : 'true';
     this.iafas = object.iafas === undefined ? null : object.iafas;
   }
 }
