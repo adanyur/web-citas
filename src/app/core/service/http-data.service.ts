@@ -85,7 +85,6 @@ export class HttpDataService {
       id: correo[0].v_retorno,
       correo: correo[0].p_mail,
     };
-
     const url = `${environment.apiURL}/email`;
     return this.http.post(url, this.email);
   }

@@ -61,7 +61,7 @@
         >
           <option value="">SELECCIONAR TURNOS</option>
           <option
-            *ngFor="let turno of turnos$ | async"
+            *ngFor="let turno of turnos"
             [ngValue]="turno.idprogramacion"
           >
             {{ turno.hora_inicio }} -
@@ -78,7 +78,7 @@
           formControlName="hora"
         >
           <option value="">SELECCIONAR HORA</option>
-          <option *ngFor="let time of horas" [ngValue]="time">{{
+          <option *ngFor="let time of horas$ | async" [ngValue]="time">{{
             time.hora
           }}</option>
         </select>
@@ -90,9 +90,13 @@
         <input
           type="email"
           class="form-control rounded-pill border border-success"
-          placeholder="Correo"
+          placeholder="CORREO"
           formControlName="correo"
         />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" [ngClass]="'invalid'">
+                <div *ngIf="email.errors.required">Ingresar Email</div>
+                <div *ngIf="email.errors.email">Email incorrecto</div>
+            </div>
       </div>
     </div>
   </div>
@@ -103,9 +107,13 @@
         <input
           type="text"
           class="form-control rounded-pill border border-success"
-          placeholder="Telefono o Celular"
+          placeholder="TELEFONO O CELULAR"
           formControlName="telcel"
         />
+        <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" [ngClass]="'invalid'">
+              <div *ngIf="phone.errors.required">Ingresar numero celular</div>
+              <div *ngIf="phone.errors.pattern">Ingresar solo numero</div>
+        </div>
       </div>
     </div>
   </div>

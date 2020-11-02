@@ -22,8 +22,8 @@ export class MessageService {
   MessageEnvio(mensaje: any) {
     const message = `<h4>${mensaje}</h4>`;
     Swal.fire({
-      title: '<h4>¡¡Generando citas!!</h4>',
-      timer: 2000,
+      title: '<h4>¡¡Generando cita!!</h4>',
+      timer: 1000,
       onBeforeOpen: () => {
         Swal.showLoading();
       },
