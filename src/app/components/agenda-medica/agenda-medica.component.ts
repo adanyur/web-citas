@@ -113,17 +113,10 @@ export class AgendaMedicaComponent implements OnInit {
   postEnviarDatos() {
     this.data.postGenerarCitas(new DataSend(this.formularioAgendaMedica.value, this.data.historia))
       .subscribe((data) => {
-        console.log(data);
-        this.Correo(data);
         this.message.MessageEnvio(data);
         this.storage.removeSession();
       });
   }
-
-  Correo(data: any) {
-    this.data.getCorreo(data).subscribe((response) => console.log(response));
-  }
-
 
   OnDestroy() {
     this.medicosSub.unsubscribe();

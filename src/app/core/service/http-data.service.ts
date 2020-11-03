@@ -1,29 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-//
+
 import { environment } from '../../../environments/environment';
-//
+
 import { StorageService } from './storage.service';
-//
-import {
-  Especialidades,
-  Medicos,
-  Turnos,
-  Horas,
-  Iafas,
-  DataSend,
-  Message,
-  Email,
-  User,
-} from '../models';
+
+import { Especialidades, Medicos, Turnos, Horas, Iafas, DataSend, Message, User,} from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpDataService {
-  headers: HttpHeaders;
-  email: Email;
+
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -78,14 +67,5 @@ export class HttpDataService {
   postGenerarCitas(data: DataSend): Observable<Message> {
     const url = `${environment.apiURL}/citas`;
     return this.http.post<Message>(url, data);
-  }
-
-  getCorreo(correo: any) {
-    this.email = {
-      id: correo[0].v_retorno,
-      correo: correo[0].p_mail,
-    };
-    const url = `${environment.apiURL}/email`;
-    return this.http.post(url, this.email);
   }
 }

@@ -25,8 +25,17 @@ export class StorageService {
     return JSON.parse(this.localStorageService.getItem('USERS'));
   }
 
+  isAuthenticated() {
+    const token = this.getToken();
+    const user = this.getUsers();
+    return (token && user) === null ? false : true;
+  }
+
+
   removeSession() {
-    this.localStorageService.removeItem('TOKEN');
-    this.localStorageService.removeItem('USERS');
+    // this.localStorageService.removeItem('TOKEN');
+    // this.localStorageService.removeItem('USERS');
+    this.localStorageService.clear();
+
   }
 }

@@ -19,13 +19,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const session = this.storeService.getToken();
+    const session = this.storeService.isAuthenticated();
 
     if (!session) {
       this.router.navigate(['']);
       return false;
     }
-
     return true;
   }
 }
