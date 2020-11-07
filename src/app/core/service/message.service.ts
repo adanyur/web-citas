@@ -19,8 +19,14 @@ export class MessageService {
     Swal.fire({ icon: 'info', title: message });
   }
 
-  MessageEnvio(mensaje: any) {
-    const message = `<h4>${mensaje}</h4>`;
+
+  MessageSucces(info: string) {
+    const message = `<h4>${info}</h4>`;
+    Swal.fire({ icon: 'success', title: message });
+    this.router.navigate(['']);
+  }
+
+  MessageEnvio() {
     Swal.fire({
       title: '<h4>¡¡Generando cita!!</h4>',
       timer: 1000,
@@ -28,15 +34,6 @@ export class MessageService {
         Swal.showLoading();
       },
       onClose: () => {},
-    }).then((result) => {
-      if (result.dismiss === Swal.DismissReason.timer) {
-        const swalWithBootstrapButtons = Swal.mixin({
-          customClass: { confirmButton: 'btn btn-success' },
-          buttonsStyling: false,
-        });
-        swalWithBootstrapButtons.fire({ icon: 'success', title: message });
-      }
-      this.router.navigate(['']);
     });
   }
 

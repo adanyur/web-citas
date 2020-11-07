@@ -1,4 +1,5 @@
 import { Component , OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 import { FormBuilder , FormGroup , Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
@@ -13,7 +14,8 @@ import { Especialidades , Medicos , Turnos , Horas , Iafas , DataSend } from '..
 })
 export class AgendaMedicaComponent implements OnInit {
   iafas$: Observable<Iafas[]>;
-  horas$: Observable<Horas[]>;
+  horas: Horas[];
+  horasSub: Subscription;
   medicos: Medicos[];
   medicosSub:Subscription;
   turnos: Turnos[];
@@ -28,9 +30,10 @@ export class AgendaMedicaComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private data: HttpDataService,
+    private http: HttpDataService,
     private storage: StorageService,
-    private message: MessageService
+    private message: MessageService,
+    private router:Router
   ) {}
   ngOnInit(): void {
     this.formularioAgendaMedica = this.fb.group({
@@ -64,7 +67,7 @@ export class AgendaMedicaComponent implements OnInit {
 
 
   getSelectFecha(fecha: Date) {
-   this.especialidadesSub = this.data.Especialidades(fecha).subscribe((data) => {
+   this.especialidadesSub = this.http.Especialidades(fecha).subscribe((data) => {
       data[this.status] === false ? this.message.MessageInfo(data[this.messages]) :
       ((this.especialidades = data), this.form.especialidad.enable());
     });
@@ -72,7 +75,7 @@ export class AgendaMedicaComponent implements OnInit {
 
   getSelectEspecialidad() {
       this.check = this.formularioAgendaMedica.value.especialidad === '001' ? true : false;
-      this.medicosSub = this.data.Medicos( this.formularioAgendaMedica.value ).subscribe((data) => {
+      this.medicosSub = this.http.Medicos( this.formularioAgendaMedica.value ).subscribe((data) => {
       if (data[this.status] === false){
         this.message.MessageInfo( data[this.messages] );
         this.form.medico.setValue('');
@@ -85,7 +88,7 @@ export class AgendaMedicaComponent implements OnInit {
   }
 
   getSelectMedico() {
-    this.turnosSub = this.data.Tunos(this.formularioAgendaMedica.value).subscribe(data=>{
+    this.turnosSub = this.http.Tunos(this.formularioAgendaMedica.value).subscribe(data=>{
         if (data[this.status] === false){
           this.message.MessageInfo(data[this.messages])
         }
@@ -95,10 +98,12 @@ export class AgendaMedicaComponent implements OnInit {
   }
 
   getSelectTurno() {
-   this.horas$ = this.data.Horas(this.formularioAgendaMedica.value);
-   this.form.hora.enable();
-   this.form.correo.enable();
-   this.form.telcel.enable();
+    this.horasSub = this.http.Horas(this.formularioAgendaMedica.value).subscribe(data=>{
+     this.horas = data;
+     this.form.hora.enable();
+     this.form.correo.enable();
+     this.form.telcel.enable();
+   });
   }
 
   disabledIafas(data: boolean) {
@@ -107,20 +112,24 @@ export class AgendaMedicaComponent implements OnInit {
       return;
     }
     this.formularioAgendaMedica.controls.iafas.enable();
-    this.iafas$ = this.data.Iafas();
+    this.iafas$ = this.http.Iafas();
   }
 
   postEnviarDatos() {
-    this.data.postGenerarCitas(new DataSend(this.formularioAgendaMedica.value, this.data.historia))
+    this.message.MessageEnvio();
+    this.http.postGenerarCitas(new DataSend(this.formularioAgendaMedica.value, this.http.historia))
       .subscribe((data) => {
-        this.message.MessageEnvio(data);
+        this.http.getLogout();
         this.storage.removeSession();
+        this.message.MessageSucces(data[0].mensaje);
       });
   }
 
+
   OnDestroy() {
+    this.especialidadesSub.unsubscribe();
     this.medicosSub.unsubscribe();
     this.turnosSub.unsubscribe();
-    this.especialidadesSub.unsubscribe();
+    this.horasSub.unsubscribe();
   }
 }

@@ -8,6 +8,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'citas', component: LayaoutComponent, canActivate: [AuthGuard] },
+  //{ path: 'citas', component: LayaoutComponent },
   { path: '**', redirectTo: ''},
 ];
 

@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 
 import { Session } from '../models';
 
+import {JwtHelperService} from '@auth0/angular-jwt'
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   private localStorageService: any;
+
+  expired = new JwtHelperService();
 
   constructor() {
     this.localStorageService = localStorage;
@@ -31,11 +36,14 @@ export class StorageService {
     return (token && user) === null ? false : true;
   }
 
-
   removeSession() {
-    // this.localStorageService.removeItem('TOKEN');
-    // this.localStorageService.removeItem('USERS');
     this.localStorageService.clear();
-
   }
+
+  getTokenExpired() {
+    const token=this.localStorageService.getItem('TOKEN');
+    return this.expired.isTokenExpired(token);
+  }
+
+
 }

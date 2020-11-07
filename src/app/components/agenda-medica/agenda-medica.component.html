@@ -78,7 +78,7 @@
           formControlName="hora"
         >
           <option value="">SELECCIONAR HORA</option>
-          <option *ngFor="let time of horas$ | async" [ngValue]="time">{{
+          <option *ngFor="let time of horas" [ngValue]="time">{{
             time.hora
           }}</option>
         </select>

@@ -68,4 +68,12 @@ export class HttpDataService {
     const url = `${environment.apiURL}/citas`;
     return this.http.post<Message>(url, data);
   }
+
+
+  getLogout() {
+    const url = `${environment.apiURL}/logout`;
+    this.http.post(url,{}).subscribe();
+  }
+
+
 }
