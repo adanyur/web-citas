@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const session = this.storeService.isAuthenticated();
     const expired = this.storeService.getTokenExpired();
-
+      console.log(expired);
     if (!session  || expired ) {
       this.storeService.removeSession();
       this.router.navigate(['']);

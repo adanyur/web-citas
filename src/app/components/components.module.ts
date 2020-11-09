@@ -7,12 +7,20 @@ import { LayaoutComponent } from './layaout/layaout.component';
 import { AgendaMedicaComponent } from './agenda-medica/agenda-medica.component';
 import { DatoPacienteComponent } from './dato-paciente/dato-paciente.component';
 
+import { ComponentsRoutingModule } from './components-routing.module';
+
+
 @NgModule({
   declarations: [
     AgendaMedicaComponent,
     DatoPacienteComponent,
-    LayaoutComponent,
+    LayaoutComponent
   ],
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ComponentsRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }
